@@ -2,16 +2,17 @@ const Token = artifacts.require('./Token')
 require('chai')
 .use(require('chai-as-promised'))
 .should()
-contract('Token', (accounts) => {
+contract('Token', ([deployer, receiver]) => {
     let token;
     const name = 'Dapp Token'
     const symbol = 'Dapp'
-    const decimals = '18'
+    const decimals = '18' 
     const totalsupply =  '1000000000000000000000000'
     beforeEach( async() => {
         token = await Token.new()
     })
-    describe("development", () => {
+    // variable test
+    describe("development", () => { 
         // check for name
         it("track the name", async () => {
            const result = await token.name()
@@ -32,5 +33,28 @@ contract('Token', (accounts) => {
             const result = await token.totalSupply()
             result.toString().should.equal(totalsupply)
         })
+        it('it assign total supply to deployer', async () => {
+            const result = await token.balanceOf(deployer)
+            result.toString().should.equal(totalsupply)
+        })
     })
+    //transfer of token tested
+     describe('transfer of token', () => {
+          it('it show token balance', async () => {
+            let balanceOf;
+            // before transfer
+            balanceOf = await token.balanceOf(deployer)
+            console.log('deployer before balence', balanceOf.toString())
+            balanceOf = await token.balanceOf(receiver)
+            console.log('receiver before balence', balanceOf.toString())
+            // transfer
+            await token.transfer(receiver, '100000000000000000000',{from: deployer})
+            // after transfer
+             balanceOf = await token.balanceOf(deployer)
+            console.log('deployer after balence', balanceOf.toString())
+            balanceOf = await token.balanceOf(receiver)
+            console.log('receiver after balence', balanceOf.toString())
+        })
+      })
+
 })
