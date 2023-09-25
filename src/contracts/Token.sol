@@ -9,15 +9,18 @@ contract Token{
     uint256 public decimal = 18;
     uint256 public totalSupply;
 
-
+// mapping
 mapping(address => uint256 ) public balanceOf;
+
+// events
+event Transfer(address from, address to, uint256 value);
+// constructor
     constructor () public {
         totalSupply = 1000000 * (10 ** decimal);
         balanceOf[msg.sender] = totalSupply;
     }
 
-// track balance 
-// send Token
+// transfer function
 function transfer (address _to, uint256 _value) public returns (bool success){
     balanceOf[msg.sender] = balanceOf[msg.sender].sub(_value);
     balanceOf[_to] = balanceOf[_to].add(_value);
