@@ -1,0 +1,41 @@
+describe("Transfering of Token", () => {
+    describe('success token tranfered', () => {
+       it('it check transfered token', async () => {
+        let balanceOf;
+        const token = await Token.new();
+        await token.transfer(receiver, tokens(100), {from: deployer})
+        balanceOf = await token.balanceOf(deployer)
+        balanceOf.toString().should.equal(tokens(999900).toString())
+        balanceOf = await token.balanceOf(receiver)
+        balanceOf.toString().should.equal(tokens(100).toString())
+    })
+    it('it emit transfer event', async () => {
+        const amount = tokens(100);
+        const token = await Token.new();
+      const result = await token.transfer(receiver, amount, {from: deployer});
+      const logs = result.logs[0];
+      logs.event.should.equal('Transfer');
+      const event = logs.args
+      event.from.toString().should.equal(deployer, 'from is correct');
+      event.to.toString().should.equal(receiver, 'to is correct');
+      event.value.toString().should.equal(amount.toString(), 'value is correct');
+    })
+  })
+  describe('failure token transfer', () => {
+      it('reject insufficient balance', async () => {
+        const token = await Token.new()
+        let invalidAmount = tokens(100000000); // 100 million tokens
+        await token.transfer(receiver, invalidAmount, { from: deployer}).should.be.rejectedWith(rejectedError);
+      })
+         it('reject invalid amount', async () => {
+        const token = await Token.new()
+        let invalidAmount = tokens(10); // 100 million tokens
+        await token.transfer(deployer, invalidAmount, { from: receiver}).should.be.rejectedWith(rejectedError);
+      })
+      it('reject invalid recipients', async () => {
+        const amount = tokens(10);
+         const token = await Token.new()
+         await token.transfer(0x0, amount, {from: deployer}).should.be.rejectedWith(rejectedError)
+      } )
+  })
+    })

@@ -11,19 +11,41 @@ contract Token{
 
 // mapping
 mapping(address => uint256 ) public balanceOf;
+mapping(address => mapping(address => uint256)) public allowance;
 
 // events
-event Transfer(address from, address to, uint256 value);
+event Transfer (address indexed from, address indexed to, uint256 value);
+event Approve(address indexed owner, address indexed spender, uint256 _value);
 // constructor
     constructor () public {
         totalSupply = 1000000 * (10 ** decimal);
         balanceOf[msg.sender] = totalSupply;
     }
+    // internal fuction
+    function _transfer(address _from, address _to, uint256 _value ) internal {
+         require(_to != address(0));  
+        balanceOf[_from] = balanceOf[_from].sub(_value);
+        balanceOf[_to] = balanceOf[_to].add(_value);
+        emit Transfer (_from, _to, _value);
+    }
+    // transfer function
+    function transfer (address _to, uint256 _value) public returns (bool success){
+        require(balanceOf[msg.sender] >= _value);
+        _transfer(msg.sender, _to, _value);
+        return true;
+    }
+    // allow someone to transfer token
+    // approve token
+    function approve(address _spender, uint256 _value) public returns (bool success){
+        require(_spender != address(0));
 
-// transfer function
-function transfer (address _to, uint256 _value) public returns (bool success){
-    balanceOf[msg.sender] = balanceOf[msg.sender].sub(_value);
-    balanceOf[_to] = balanceOf[_to].add(_value);
+        allowance[msg.sender][_spender] = _value;
+        emit Approve(msg.sender, _spender, _value);
+        return true;
+    }
+    // transfer from function
+function transferFrom(address _from, address _to, uint256 _value) public returns(bool success){
+    _transfer(_from, _to, _value);
     return true;
 }
 
