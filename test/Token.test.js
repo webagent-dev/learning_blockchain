@@ -118,4 +118,41 @@ contract("Token", ([deployer, receiver, exchange]) => {
         })
     })
   })
+  describe('delegate token transferFrom', () => {
+    describe('check success transferFrom', () => {
+        let amount, result, balanceOf;
+        it('success transferFrom', async () => {
+            const token = await Token.new()
+            amount = tokens(100)
+            await token.approve(exchange, amount, {from: deployer});
+             await token.transferFrom(deployer, receiver, amount,{from: exchange});
+            balanceOf = await token.balanceOf(deployer)
+            balanceOf.toString().should.equal(tokens(999900).toString())
+            balanceOf = await token.balanceOf(receiver)
+            balanceOf.toString().should.equal(tokens(100).toString())
+        })
+        it('reset the allowance', async () => {
+            const token = await Token.new()
+            amount = tokens(100)
+          const allowance = await token.allowance(deployer, exchange)
+         allowance.toString().should.equal('0')
+        })
+        it('emit transferFrom event', async () => {
+              const token = await Token.new()
+            amount = tokens(100)
+            await token.approve(exchange, amount, {from: deployer});
+           result =   await token.transferFrom(deployer, receiver, amount,{from: exchange});
+           const log = result.logs[0]
+           log.event.should.equal('Transfer')
+           // event logs
+           const event = log.args
+           event.from.toString().should.equal(deployer, 'from is correct')
+           event.to.should.equal(receiver, 'from is correct')
+           event.value.toString().should.equal(amount.toString(), 'from is correct')
+        })
+    })
+    describe(' check failure transferFrom', () => {
+        
+    })
+  })
 })

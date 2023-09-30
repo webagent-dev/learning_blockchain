@@ -38,13 +38,13 @@ event Approve(address indexed owner, address indexed spender, uint256 _value);
     // approve token
     function approve(address _spender, uint256 _value) public returns (bool success){
         require(_spender != address(0));
-
         allowance[msg.sender][_spender] = _value;
         emit Approve(msg.sender, _spender, _value);
         return true;
     }
     // transfer from function
 function transferFrom(address _from, address _to, uint256 _value) public returns(bool success){
+    allowance[_from][msg.sender] = allowance[_from][msg.sender].sub(_value);
     _transfer(_from, _to, _value);
     return true;
 }
