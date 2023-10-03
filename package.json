@@ -1,8 +1,8 @@
 {
-  "name": "bootcamp",
+  "name": "Learning Blockchain",
   "version": "0.2.0",
   "description": "Decentralized Ethereum Token Exchange",
-  "author": "dev@dappuniversity.com",
+  "author": "webagent-dev",
   "private": true,
   "homepage": ".",
   "engines": {
