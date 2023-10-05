@@ -37,7 +37,7 @@ event Approve(address indexed owner, address indexed spender, uint256 _value);
     // allow someone to transfer token
     // approve token
     function approve(address _spender, uint256 _value) public returns (bool success){
-        require(_spender != address(0));
+        require(_spender != address(0)); 
         allowance[msg.sender][_spender] = _value;
         emit Approve(msg.sender, _spender, _value);
         return true;

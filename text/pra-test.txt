@@ -152,7 +152,18 @@ contract("Token", ([deployer, receiver, exchange]) => {
         })
     })
     describe(' check failure transferFrom', () => {
-        
+              it('reject invalid and insufficient amount', async () => {
+                    const token = await Token.new()
+                    const amount = tokens(100000000)
+                    // await token.approve(exchange, amount, {from: deployer})
+                    await token.transferFrom(deployer, receiver, amount, {from: exchange}).should.be.rejectedWith(rejectedError)
+                  })
+                  it('it check invalid address', async () => {
+                    const token = await Token.new()
+                    const amount = tokens(100);
+                    // await token.approve(exchange, amount, {from: deployer})
+                    await token.transferFrom(deployer, 0x0, amount, {from: exchange}).should.be.rejected
+                  })
     })
   })
 })
