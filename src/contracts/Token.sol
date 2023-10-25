@@ -16,7 +16,7 @@ contract Token{
     event Approve (address indexed _owner, address indexed _spender, uint256 _value );
     // constructor
     constructor () public {
-        totalSupply = 100000 * (10 ** decimal);
+        totalSupply = 1000000 * (10 ** decimal);
         balanceOf[msg.sender] = totalSupply;
     }
     // internal function
