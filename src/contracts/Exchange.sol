@@ -5,10 +5,10 @@
 //  handle trade - charge fees
 
 // TODO
-// [ ] Set the fee account
-//[ ] Deposit Ether
+// [X] Set the fee account
+//[X] Deposit Ether
 // [ ] Withdraw Ether
-// [ ] Deposit Ether
+// [X] Deposit Token
 // [ ] Withdraw tokens
 // [ ] Check Balances
 // [ ] Make order
@@ -34,7 +34,12 @@ event Deposit (address token, address user, uint256 amount, uint256 balance);
         feeAccount = _feeAccount;
         feePercent = _feePercent;
   }
+  // revert function
+  function() external {
+    revert();
+  }
   // functions
+
   function depositEther () payable public {
     tokens[ETHER][msg.sender] = tokens[ETHER][msg.sender].add(msg.value);
      emit Deposit(ETHER, msg.sender, msg.value, tokens[ETHER][msg.sender]);

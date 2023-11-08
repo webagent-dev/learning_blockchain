@@ -3,7 +3,7 @@ const Token = artifacts.require('./Token')
 require('chai')
 .use(require('chai-as-promised'))
 .should()
-const { tokens, rejectedError, ETHER_ADDRESS_ZERO } = require('../helpers/helper')
+const { tokens, rejectedError, ether, ETHER_ADDRESS_ZERO } = require('../helpers/helper')
 
 
 contract('Exchange', ([deployer, feeAccount, user1]) => {
@@ -24,8 +24,18 @@ contract('Exchange', ([deployer, feeAccount, user1]) => {
                 result.toString().should.equal(feePercent.toString())
             })
     }) 
+    describe('fallback function check', () => {
+        it('revert mistaken transaction', async() => {
+            await exchange.sendTransaction({value: ether(1), from: user1})
+        })
+    })
     describe('deposit ETHER', () => {
-        
+        describe('success deposit', ()=> {
+
+        })
+        describe('failure deposit', ()=> {
+            
+        })
     })
     describe('deposit token', () => {
         describe('success deposit', () => {
