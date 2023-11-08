@@ -22,4 +22,13 @@ contract("Exchange", ([deployer, feeAccount, user1]) => {
             result.toString().should.equal(feePercent.toString())
         })
     })
+    describe('fallback check', () => {
+        it('revert unknown transaction', async() => {
+            await exchange.sendTransaction({from: user1, value: ether(1)}).should.be.rejectedWith(rejectedError)
+        })
+        
+    })
+    describe('deposit ether', () => {
+
+    })
 })
