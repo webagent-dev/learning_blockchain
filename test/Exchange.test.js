@@ -81,7 +81,12 @@ contract("Exchange", ([deployer, feeAccount, user1]) => {
             })
         })
         describe('failure deposit', () => {
-
+            it('reject ether deposit', async() => {
+                await exchange.depositToken(ETHER_ADDRESS, tokens(10), {from: user1}).should.be.rejectedWith(rejectedError)
+            })
+            it('fail when no tokens approved', async() => {
+                await exchange.depositToken(token.address, tokens(10), {from: user1}).should.be.rejectedWith(rejectedError)
+            })
         })
     })
 })
