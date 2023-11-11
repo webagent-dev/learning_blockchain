@@ -6,4 +6,4 @@ export const ether = (n) => {
     
 export const tokens = (n) => ether(n)
 export const rejectedError = 'VM Exception while processing transaction: revert'
-export const ETHER_ADDRESS_ZERO = '0x0000000000000000000000000000000000000000'
+export const ETHER_ADDRESS = '0x0000000000000000000000000000000000000000'

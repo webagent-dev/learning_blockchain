@@ -46,7 +46,7 @@ contract('Token', ([deployer, receiver, exchange]) => {
                     let balanceOf;
                     await token.transfer(receiver, tokens(100), {from: deployer})
                     balanceOf = await token.balanceOf(deployer)
-                    balanceOf.toString().should.equal(tokens(99900).toString())
+                    balanceOf.toString().should.equal(tokens(9990).toString())
                     balanceOf = await token.balanceOf(receiver)
                     balanceOf.toString().should.equal(tokens(100).toString())
                 })
