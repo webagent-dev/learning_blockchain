@@ -1,3 +1,4 @@
+import { ether, tokens, ETHER_ADDRESS,rejectedError } from '../helpers/helper'
 const Token = artifacts.require('./Token')
 const Exchange = artifacts.require('./Exchange')
 require('chai')
@@ -29,8 +30,7 @@ contract("Exchange", ([deployer, feeAccount, user1]) => {
             await exchange.sendTransaction({value: ether(1), from: user1}).should.be.rejectedWith(rejectedError)
         })
     })
-   
-    })
+
     describe('deposit ether', () => {
        describe('success deposit', () => {
         amount = ether(1)
