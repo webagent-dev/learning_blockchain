@@ -62,6 +62,7 @@ contract("Exchange", ([deployer, feeAccount, user1]) => {
         })
         describe('success withdraw', () => {
             beforeEach(async() => {
+                amount = ether(1)
                 result = await exchange.withdrawEther(amount, {from: user1})
             })
             it('check ether withdraw', async() => {
