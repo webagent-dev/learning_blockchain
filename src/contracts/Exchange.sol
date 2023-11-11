@@ -5,10 +5,10 @@
 //  handle trade - charge fees
 
 // TODO
-// [ ] Set the fee account
-//[ ] Deposit Ether
-// [ ] Withdraw Ether
-// [ ] Deposit Ether
+// [x] Set the fee account
+//[x] Deposit Ether
+// [] Withdraw Ether
+// [x] Deposit Token
 // [ ] Withdraw tokens
 // [ ] Check Balances
 // [ ] Make order
@@ -33,6 +33,10 @@ event Deposit (address token, address user, uint256 amount, uint256 balance);
   constructor (address _feeAccount, uint256 _feePercent) public {
         feeAccount = _feeAccount;
         feePercent = _feePercent;
+  }
+// handle token sent by mistake
+  function() external{
+    revert();
   }
   // functions
   function depositEther () payable public {
