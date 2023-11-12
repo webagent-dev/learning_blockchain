@@ -62,6 +62,6 @@ event Withdraw (address token, address user, uint256 amount, uint256 balance);
   }
 
   function checkBalance(address _token, address _user) public view returns(uint256){
-    return tokend[_token][_user];
+    return tokens[_token][_user];
   }
 }
