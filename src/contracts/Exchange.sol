@@ -32,7 +32,7 @@ uint256 public orderCount;
 //events
 event Deposit (address token, address user, uint256 amount, uint256 balance);
 event Withdraw (address token, address user, uint256 amount, uint256 balance);
-event Order (uint id, address user, address tokenGet, uint256 amountGet, address tokenGive, uint256 amountGive)
+event Order (uint id, address user, address tokenGet, uint256 amountGet, address tokenGive, uint256 amountGive, uint256 timestamp);
 // struct
 struct _Order {
   uint id;
@@ -80,7 +80,8 @@ struct _Order {
 
   function makeOrder(address _tokenGet, uint256 _amountGet, address _tokenGive, uint256 _amountGive) public {
     orderCount = orderCount.add(1);
-    _orders[orderCount] = _Order(orderCount, msg.sender, _tokenGet, _amountGet, _tokenGive, _amountGive, now);
-    emit Order(orderCount, msg.sender, _tokenGet, _amountGet, _tokenGive, _amountGive, now)
+    orders[orderCount] = _Order(orderCount, msg.sender, _tokenGet, _amountGet, _tokenGive, _amountGive, now);
+    emit Order(orderCount, msg.sender, _tokenGet, _amountGet, _tokenGive, _amountGive, now);
+    // emit Order(orderCount, msg.sender, _tokenGet, _amountGet, _tokenGive, _amountGive, now);
   }
 }
