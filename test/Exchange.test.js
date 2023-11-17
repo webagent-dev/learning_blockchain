@@ -162,4 +162,14 @@ contract("Exchange", ([deployer, feeAccount, user1]) => {
             result.toString().should.equal(ether(1).toString())
         })
     })
+    describe('making order', () => {
+        let result;
+        beforeEach(async() => {
+            result = await exchange.makeOrder(token.address, tokens(1), ETHER_ADDRESS, ether(1), {from: user1})
+        })
+        it('track order', async() => {
+            const orderCount = await exchange.orderCount()
+            orderCount.toString().should.equal('1')
+        })
+    })
 })
